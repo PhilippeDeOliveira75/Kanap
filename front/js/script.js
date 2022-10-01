@@ -1,0 +1,19 @@
+//Récupération des products//
+
+/*fetch("http://localhost:3000/api/products")
+	.then(function(res){
+		if (res.ok){
+			return res.json();
+		}
+	})
+
+	.then(function(value){
+		console.log(value);
+	})
+
+	.catch(function(err){
+		console.log("FUCK");
+	})
+*/
+
+//Afficher les kanaps sur l'index//
