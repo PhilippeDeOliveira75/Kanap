@@ -23,7 +23,7 @@ fetch("http://localhost:3000/api/products")
 
 			let myImg = document.createElement('img');
 			myImg.setAttribute('src', products[index].imageUrl);
-			myImg.setAttribute = ('alt', products[index].altTxt);
+			myImg.setAttribute('alt', products[index].altTxt);
 			myArticle.appendChild(myImg);
 
 			let myH3 = document.createElement('h3');

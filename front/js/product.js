@@ -1,7 +1,7 @@
 let productId = new URL(window.location.href).searchParams.get('id');
     console.log(productId)
 
-fetch("http://localhost:3000/api/products/" + productId)
+fetch(`http://localhost:3000/api/products/${productId}`)
 	.then(function(res){
 		if (res.ok){
 			return res.json();
@@ -28,27 +28,16 @@ fetch("http://localhost:3000/api/products/" + productId)
 		myP.textContent = product.description;
 
 
-		for(let colors in product.colors)
-			console.log(colors);
+		for(let index in product.colors){
+			console.log(product.colors[index]);
 
 			let myValue = document.getElementById('colors');
-
-			let myOption = document.getElementsByTagName('option');
-			myOption.setAttribute('value', colors);
+			let myOption = document.createElement('option');
+			myOption.setAttribute('value', product.colors[index]);
+			myOption.textContent = product.colors[index];
 			myValue.appendChild(myOption);
-
-
-		
-
-		//let mySelect = document.getElementsById('colors');
-
-		//let myColor = document.getElementsByTagName('option');
-
-		//onclick = document.getElementById('colors').getElementsByTagName('option').colors = 'selected';
-
 		}
-
-		)
+	})
 
 	.catch(function(err){
 		console.log(err);
