@@ -37,8 +37,62 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 			myOption.textContent = product.colors[index];
 			myValue.appendChild(myOption);
 		}
+
+		let cartBtn = document.getElementById('addToCart');
+
+		cartBtn.addEventListener('click', function(e) {
+			let color = document.querySelector("#colors").value
+				console.log();
+			let qty = document.querySelector('#quantity').value
+				console.log();
+			
+			if(color == 0 || qty == 0)
+				alert("Vous n'avez pas indiquez de couleur ou de quanité ")
+			
+			let price = product.price;
+
+			let cart = {
+				id : productId,
+				color : color,
+				quantity : Number(qty),
+				price : price
+			}
+				console.log();
+			
+			localStorage.setItem("cart", JSON.stringify(cart));
+
+			window.location.href = "./cart.html";
+		})
 	})
 
+	
 	.catch(function(err){
 		console.log(err);
 	})
+	
+	class cart{
+		constructor(){
+			let cart = localStorage.getItem("cart");
+			if(cart == null){
+				this.cart = [];
+			}else{
+				this.cart = JSON.parse(cart);
+			}
+		}
+	
+		save(){
+			localStorage.setItem("cart", JSON.stringify(this.cart));
+		}
+
+		add(product){
+			let foundProduct = this.cart.find(p => p.id == product.id);
+			if(foundProduct != undefined){
+				foundProduct.quantity ++;
+			}else{
+				product.quantity = 1;
+				this.cart.push(product);
+			}
+			this.save()
+		}
+	
+	}
