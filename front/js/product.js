@@ -1,5 +1,5 @@
 let productId = new URL(window.location.href).searchParams.get('id');
-    console.log(productId)
+
 
 fetch(`http://localhost:3000/api/products/${productId}`)
 	.then(function(res){
@@ -9,7 +9,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 	})
 
     .then(function(product){
-		console.log(product);
+
 
 		let myDiv = document.querySelector('.item__img');
 
@@ -29,7 +29,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 
 
 		for(let index in product.colors){
-			console.log(product.colors[index]);
+
 
 			let myValue = document.getElementById('colors');
 			let myOption = document.createElement('option');
@@ -42,26 +42,26 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 
 		cartBtn.addEventListener('click', function(e) {
 			let color = document.querySelector("#colors").value
-				console.log();
-			let qty = document.querySelector('#quantity').value
-				console.log();
+				
+			let qty = document.querySelector("#quantity").value
+				
+			let price = document.querySelector("#price").value
 			
-			if(color == 0 || qty == 0)
-				alert("Vous n'avez pas indiquez de couleur ou de quanité ")
-			
-			let price = product.price;
+			if(color == 0 || qty == 0){
+				alert("Vous n'avez pas indiquez de couleur ou de quanité");
+				return
+			}
 
-			let cart = {
+			let infoProduct = {
 				id : productId,
 				color : color,
 				quantity : Number(qty),
 				price : price
-			}
-				console.log();
+				}
 			
-			localStorage.setItem("cart", JSON.stringify(cart));
+			localStorage.setItem("cartContent", JSON.stringify(infoProduct))
 
-			window.location.href = "./cart.html";
+			//window.location.href = "./cart.html";
 		})
 	})
 
@@ -69,30 +69,3 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 	.catch(function(err){
 		console.log(err);
 	})
-	
-	class cart{
-		constructor(){
-			let cart = localStorage.getItem("cart");
-			if(cart == null){
-				this.cart = [];
-			}else{
-				this.cart = JSON.parse(cart);
-			}
-		}
-	
-		save(){
-			localStorage.setItem("cart", JSON.stringify(this.cart));
-		}
-
-		add(product){
-			let foundProduct = this.cart.find(p => p.id == product.id);
-			if(foundProduct != undefined){
-				foundProduct.quantity ++;
-			}else{
-				product.quantity = 1;
-				this.cart.push(product);
-			}
-			this.save()
-		}
-	
-	}

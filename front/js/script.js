@@ -11,8 +11,6 @@ fetch("http://localhost:3000/api/products")
 		console.log(products);
 
 		for(let index in products) {
-			console.log(index);
-			console.log(products[index]);
 
 			let myA = document.createElement('a');
 			myA.setAttribute('href', './product.html?id=' + products[index]._id);

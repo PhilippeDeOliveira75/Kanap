@@ -1,21 +1,32 @@
-/*const totalItems = localStorage.length;
-    console.log(totalItems);
 
-const cart = [];
+        let myImgDiv = document.querySelector('.cart__item__img');
 
-for(let i = 0; i < totalItems; i++){
+		let myImg = document.createElement('img');
+		myImg.setAttribute('src', product.imageUrl);
+		myImg.setAttribute('alt', product.altTxt);
+		myImgDiv.appendChild(myImg);
 
-    let item = localStorage.getItem(localStorage.key(i))
-        console.log(item);
+        let myDescriptionDiv = document.querySelector('.cart__item__content__description');
 
-    let itemToCart = JSON.parse(item);
+		let myH2 = document.createElement('h2');
+		myH2.textContent = product.name;
+        myDescriptionDiv.appendChild(myH2);
 
-    cart.push(itemToCart)
-}
+		let myColor = document.createElement('p');
+		myColor.textContent = product.color;
+        myDescriptionDiv.appendChild(myColor);
 
-console.log(cart);*/
+		let myPrice = document.createElement('p');
+		myPrice.textContent = product.price;
+        myDescriptionDiv.appendChild(myPrice);
 
-class cart{
+        let myQuantityDiv = document.querySelector('.cart__item__content__settings__quantity');
+
+        let myQuantity = document.createElement('p');
+        myQuantity.textContent = product.quantity;
+        myQuantityDiv.appendChild(myQuantity);
+        
+/*class cart{
     constructor(){
         let cart = localStorage.getItem("cart");
         if(cart == null){
@@ -34,7 +45,7 @@ class cart{
         if(foundProduct != undefined){
             foundProduct.quantity ++;
         }else{
-            product.quantity = 1;
+            //product.quantity = 1;
             this.cart.push(product);
         }
         this.save()
@@ -46,7 +57,7 @@ class cart{
     }
 
     changeQuanitity(product, quantity){
-        let foundProduct = this.basket.find(p => p.id == product.id);
+        let foundProduct = this.cart.find(p => p.id == product.id);
         if(foundProduct != undefined){
             foundProduct.quantity += quantity;
             if(foundProduct.quantity <= 0){
@@ -58,11 +69,11 @@ class cart{
     }
 
     totalPrice(){
-        let total = 0;
+        let total = 0; 
         for(let product of this.cart){
             total += product.quantity * product.price;
         }
         return total;
     }
     
-}
+}*/
