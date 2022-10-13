@@ -20,33 +20,90 @@ for(let index in cart){
     
         .then(function(product){
             console.log(product);
-           
-           let myImgDiv = document.querySelector('.cart__item__img');
-    
+
+            let mySection = document.getElementById('cart__items');
+
+            let myArticle = document.createElement('article');
+                myArticle.classList.add('cart__item');
+                mySection.appendChild(myArticle);
+
+            let myImgDiv = document.createElement('div');
+                myImgDiv.classList.add('cart__item__img');
+                myArticle.appendChild(myImgDiv);
+
             let myImg = document.createElement('img');
-            myImg.setAttribute('src', product.imageUrl);
-            myImg.setAttribute('alt', product.altTxt);
-            myImgDiv.appendChild(myImg);
+                myImg.setAttribute('src', product.imageUrl);
+                myImg.setAttribute('alt', product.altTxt);
+                myImgDiv.appendChild(myImg);
     
-            let myDescriptionDiv = document.querySelector('.cart__item__content__description');
+            let myItemContentDiv = document.createElement('div');
+                myItemContentDiv.classList.add('cart__item__content');
+                myArticle.appendChild(myItemContentDiv);
+
+            let myItemContentDescriptionDiv = document.createElement('div');
+                myItemContentDescriptionDiv.classList.add('cart__item__content__description');
+                myItemContentDiv.appendChild(myItemContentDescriptionDiv);
     
             let myH2 = document.createElement('h2');
-            myH2.textContent = product.name;
-            myDescriptionDiv.appendChild(myH2);
+                myH2.textContent = product.name;
+                myItemContentDescriptionDiv.appendChild(myH2);
     
             let myColor = document.createElement('p');
-            myColor.textContent = cartItem.color;
-            myDescriptionDiv.appendChild(myColor);
+                myColor.textContent = cartItem.color;
+                myItemContentDescriptionDiv.appendChild(myColor);
     
             let myPrice = document.createElement('p');
-            myPrice.textContent = product.price + " €";
-            myDescriptionDiv.appendChild(myPrice);
-    
-            let myQuantityDiv = document.querySelector('.cart__item__content__settings__quantity');
+                myPrice.textContent = product.price + " €";
+                myItemContentDescriptionDiv.appendChild(myPrice);
+
+            let myContentSettingsDiv = document.createElement('div');
+                myContentSettingsDiv.classList.add('cart__item__content__settings');
+                myItemContentDiv.appendChild(myContentSettingsDiv);
+
+            let myContentSettingsQuantityDiv = document.createElement('div');
+                myContentSettingsQuantityDiv.classList.add('cart__item__content__settings__quantity');
+                myContentSettingsDiv.appendChild(myContentSettingsQuantityDiv);
     
             let myQuantity = document.createElement('p');
-            myQuantity.textContent = "Qté : " + cartItem.quantity;
-            myQuantityDiv.appendChild(myQuantity);
+                myQuantity.textContent = "Qté : " + cartItem.quantity;
+                myContentSettingsQuantityDiv.appendChild(myQuantity);
+            
+            let myInputQuantity = document.createElement("input")
+                myInputQuantity.setAttribute('type', "number");
+                myInputQuantity.setAttribute('name', cartItem.quantity);
+                myInputQuantity.setAttribute('min', 1);
+                myInputQuantity.setAttribute('max', 100);
+                myInputQuantity.setAttribute('value', cartItem.quantity);
+                myInputQuantity.classList.add('itemQuantity');
+                myContentSettingsQuantityDiv.appendChild(myInputQuantity);
+
+                myInputQuantity.addEventListener('input', function (evt) {
+                    cartItem.quantity(input.value);
+                });
+
+            let myContentSettingsDelete = document.createElement('div');
+                myContentSettingsDelete.classList.add('cart__item__content__settings__delete');
+                myContentSettingsDiv.appendChild(myContentSettingsDelete);
+            
+            let myDeleteItem = document.createElement('p');
+                myDeleteItem.classList.add('deleteItem');
+                myDeleteItem.textContent = "Supprimer";
+                myContentSettingsDelete.appendChild(myDeleteItem);
+
+            let deleteBtn = document.getElementsByClassName('deleteItem');
+                deleteBtn.addEventListener('click', function(e) {
+                    localStorage.removeItem("cart");
+                })
+                
+		        //let cartItem = cartItem.filter(p => p.id != cartItemId);
+			    //}
+            
+            //let myTotalQuantity = document.getElementById('totalQuantity');
+                
+                
+
+
+            
         })
     
         .catch(function(err){
