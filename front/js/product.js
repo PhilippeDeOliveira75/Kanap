@@ -39,33 +39,40 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 		}
 
 		let cartBtn = document.getElementById('addToCart');
-
 		cartBtn.addEventListener('click', function(e) {
-			let color = document.querySelector("#colors").value
-				
-			let qty = document.querySelector("#quantity").value
-				
-			let price = document.querySelector("#price").value
-			
-			if(color == 0 || qty == 0){
+			let color = document.getElementById('colors').value	
+			let qty = document.getElementById('quantity').value		
+			if(color == '' || qty == 0){
 				alert("Vous n'avez pas indiquez de couleur ou de quanité");
 				return
 			}
-
 			let infoProduct = {
 				id : productId,
 				color : color,
 				quantity : Number(qty),
-				price : price
 				}
-			
-			localStorage.setItem("cartContent", JSON.stringify(infoProduct))
-
-			//window.location.href = "./cart.html";
-		})
+			// Récupérer le panier existant depuis le localStorage
+			let cart = [];
+			let cartLS = localStorage.getItem("cart")
+			if(cartLS !== null) cart = JSON.parse(cartLS)
+			// Ajouter le produit au panier
+			let index = cart.findIndex(item => (productId == item.id && color == item.color));
+			console.log(index)
+			if(index === -1) {
+				// Cas ou le produit n'est pas dans le panier : Ajouter le produit au tableau
+				cart.push(infoProduct)
+			}
+			else {
+				// Cas ou le produit est déjà dans le panier : Modifier la quantité
+				cart[index].quantity = Number(cart[index].quantity) + Number(qty);
+			}
+			// Sauvegarder le panier dans le localStorage
+			localStorage.setItem("cart", JSON.stringify(cart))
+			if(confirm("Souhaitez vous aller sur la page panier ?")) {
+				window.location.href = "./cart.html"
+			}
+		});
 	})
-
-	
 	.catch(function(err){
 		console.log(err);
 	})
