@@ -111,6 +111,19 @@ for(let index in cart){
                         deleteItemFromPage.remove()
 
                 });
+            
+                let myTotalPrice = document.getElementById('totalPrice');
+                //let total = cart.reduce((total, cartItem) => total + product.price * cartItem.quantity,0);
+                /*let total = 0;
+                    for(let productID of cart){
+                         console.log(productID);
+                        cartItem.quantity * product.price;
+                        break
+                        }*/
+                localStorage.getItem("cart");
+                console.log(cart)
+                myTotalPrice.textContent = total;
+                              
         })
     
         .catch(function(err){
