@@ -23,6 +23,8 @@ for(let index in cart){
 
             let myArticle = document.createElement('article');
                 myArticle.classList.add('cart__item');
+                myArticle.setAttribute('data-id', cartItemId);
+                myArticle.setAttribute('data-color', cartItem.color);
                 mySection.appendChild(myArticle);
 
             let myImgDiv = document.createElement('div');
@@ -101,14 +103,12 @@ for(let index in cart){
                     
                     //Sauvegarder le nouveau panier dans le localStorage
                     localStorage.setItem("cart", JSON.stringify(cart))
-
-                    window.location.reload();
                     
                     //Supprimer le visuel de l'article
                     
-                    /*let deleteItemFromPage = document.querySelector(`article[data-id="${cartItemId}"][data-color="${cartItem.color}"]`);
+                    let deleteItemFromPage = document.querySelector(`article[data-id="${cartItemId}"][data-color="${cartItem.color}"]`);
                         console.log(deleteItemFromPage);
-                        deleteItemFromPage.remove()*/
+                        deleteItemFromPage.remove()
 
                 });
         })
