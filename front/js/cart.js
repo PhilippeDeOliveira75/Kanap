@@ -9,7 +9,6 @@ for(let index in cart){
     //console.log(typeof cartItem);
 
     let cartItemId = cartItem.id;
-    console.log(cartItem.color);
 
     fetch(`http://localhost:3000/api/products/${cartItemId}`)
         .then(function(res){
@@ -19,7 +18,6 @@ for(let index in cart){
 	    })
     
         .then(function(product){
-            console.log(product);
 
             let mySection = document.getElementById('cart__items');
 
@@ -90,24 +88,32 @@ for(let index in cart){
                 myDeleteItem.textContent = "Supprimer";
                 myContentSettingsDelete.appendChild(myDeleteItem);
 
-            let deleteBtn = document.getElementsByClassName('deleteItem');
-                deleteBtn.addEventListener('click', function(e) {
-                    localStorage.removeItem("cart");
-                })
-                
-		        //let cartItem = cartItem.filter(p => p.id != cartItemId);
-			    //}
-            
-            //let myTotalQuantity = document.getElementById('totalQuantity');
-                
-                
+                myDeleteItem.addEventListener('click', function(e) {
+                    
+                    //Récupérer le panier existant depuis le localStorage
+                    let cartLS = localStorage.getItem("cart")
+                        console.log(cartLS);
+                    //Trouver le produit recherché
+                    let deleteItem = cart.findIndex(item => (cartItemId === item.id && cartItem.color === item.color));
+                        console.log(deleteItem);
+                    //Supprimer l'article du tableau
+                    cart.splice(deleteItem,1);
+                    
+                    //Sauvegarder le nouveau panier dans le localStorage
+                    localStorage.setItem("cart", JSON.stringify(cart))
 
+                    window.location.reload();
+                    
+                    //Supprimer le visuel de l'article
+                    
+                    /*let deleteItemFromPage = document.querySelector(`article[data-id="${cartItemId}"][data-color="${cartItem.color}"]`);
+                        console.log(deleteItemFromPage);
+                        deleteItemFromPage.remove()*/
 
-            
+                });
         })
     
         .catch(function(err){
             console.log(err);
-        })
-}
-
+        })      
+    }
