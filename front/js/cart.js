@@ -63,11 +63,11 @@ for(let index in cart){
             let myContentSettingsQuantityDiv = document.createElement('div');
                 myContentSettingsQuantityDiv.classList.add('cart__item__content__settings__quantity');
                 myContentSettingsDiv.appendChild(myContentSettingsQuantityDiv);
-    
+                
             let myQuantity = document.createElement('p');
-                myQuantity.textContent = "Qté : " + cartItem.quantity;
+                myQuantity.textContent = "Qté : ";
                 myContentSettingsQuantityDiv.appendChild(myQuantity);
-            
+                
             let myInputQuantity = document.createElement("input")
                 myInputQuantity.setAttribute('type', "number");
                 myInputQuantity.setAttribute('name', cartItem.quantity);
@@ -76,11 +76,12 @@ for(let index in cart){
                 myInputQuantity.setAttribute('value', cartItem.quantity);
                 myInputQuantity.classList.add('itemQuantity');
                 myContentSettingsQuantityDiv.appendChild(myInputQuantity);
-
-                myInputQuantity.addEventListener('input', function (evt) {
-                    cartItem.quantity(input.value);
+                // Changer la quantité et la sauvegarder dans le LS
+                myInputQuantity.addEventListener('change', function (e) {
+                    cartItem.quantity(myInputQuantity.value);
+                    localStorage.setItem("cart", JSON.stringify(cart))
                 });
-
+                
             let myContentSettingsDelete = document.createElement('div');
                 myContentSettingsDelete.classList.add('cart__item__content__settings__delete');
                 myContentSettingsDiv.appendChild(myContentSettingsDelete);
@@ -111,18 +112,26 @@ for(let index in cart){
                         deleteItemFromPage.remove()
 
                 });
-            
+                let myTotalQuantity = document.getElementById('totalQuantity');
+                let totalQuantity = 0;
+                for( cartItem.quantity = 0 ; cartItem.quantity < nb; cartItem.quantity += 1){
+                    totalQuantity += parseFloat( myTotalQuantity[cartItem.quantity].textContent);
+                  }
+                myTotalQuantity.textContent = totalQuantity;
+
                 let myTotalPrice = document.getElementById('totalPrice');
                 //let total = cart.reduce((total, cartItem) => total + product.price * cartItem.quantity,0);
-                /*let total = 0;
-                    for(let productID of cart){
-                         console.log(productID);
-                        cartItem.quantity * product.price;
-                        break
-                        }*/
-                localStorage.getItem("cart");
-                console.log(cart)
                 myTotalPrice.textContent = total;
+                /*let total = 0;
+                for(let product of cartItemId){
+
+                    console.log(cart);
+
+                    total = cartItem.quantity * product.price;
+
+                    break
+                    }
+                */
                               
         })
     
