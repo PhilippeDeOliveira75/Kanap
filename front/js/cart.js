@@ -164,6 +164,16 @@ for(let index in cart){
         .catch(function(err){
               console.log(err);
         })
+
+        function refreshTotals(quantity, price) {
+	        // totalCartItems
+	        let totalCartItemsSpan = document.getElementById('totalQuantity');
+	        totalCartItemsSpan.textContent = Number(totalCartItemsSpan.textContent) + Number(quantity);
+
+	        // totalAmount
+	        let totalAmountSpan = document.getElementById('totalPrice');
+	        totalAmountSpan.textContent = Number(totalAmountSpan.textContent) + (quantity * Number(price));
+        }
 }
   
 function verificationBeforeSend(){
@@ -178,8 +188,7 @@ function verificationBeforeSend(){
         console.log(products)
     }
 
-
-    //Création des booléen
+    //Création des valeurs vrai
     let boolFirstName = true;
     let boolLastName = true;
     let boolAddress = true;
