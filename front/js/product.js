@@ -55,6 +55,8 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 			let cart = [];
 			let cartLS = localStorage.getItem("cart")
 			if(cartLS !== null) cart = JSON.parse(cartLS)
+
+
 			// Ajouter le produit au panier
 			let index = cart.findIndex(item => (productId == item.id && color == item.color));
 			console.log(index)
@@ -74,5 +76,12 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 		});
 	})
 	.catch(function(err){
+
+		document.querySelector('article').remove();
+		let errorMsg = document.createElement('h1');
+		document.querySelector('.item').appendChild(errorMsg);
+		errorMsg.classList.add('title');
+		errorMsg.textContent = "Ce produit n'existe pas !";
+
 		console.log(err);
 	})
