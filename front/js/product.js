@@ -30,7 +30,6 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 
 		for(let index in product.colors){
 
-
 			let myValue = document.getElementById('colors');
 			let myOption = document.createElement('option');
 			myOption.setAttribute('value', product.colors[index]);

@@ -1,5 +1,18 @@
+/*function saveCart(){
+	localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function loadCart(){
+	localStorage.getItem("cart");
+}
+
+function itemCart(){
+	JSON.parse(loadCart) || [];
+}
+*/
+
 let cart = [];
-let cartLS = localStorage.getItem("cart")
+let cartLS = localStorage.getItem("cart");
 if(cartLS !== null) {
 	cart = JSON.parse(cartLS)
 }else{
@@ -87,8 +100,9 @@ for(let index in cart){
 				// Changer la quantité et la sauvegarder dans le LS
 				myInputQuantity.addEventListener('change', function (e) {
 					//Récupérer le panier existant depuis le localStorage
-					let cartLS = localStorage.getItem("cart")
-						console.log(cartLS);
+					let cartLS = localStorage.getItem("cart");
+					//loadCart
+						console.log(cart);
 					//Trouver le produit recherché
 					let index = cart.findIndex(item => (cartItemId === item.id && cartItem.color === item.color));
 					console.log(index);
@@ -100,6 +114,7 @@ for(let index in cart){
   
 						//Sauvegarder le nouveau panier dans le localStorage
 						localStorage.setItem("cart", JSON.stringify(cart));
+						//saveCart;
   
 						//Supprimer le visuel de l'article
 						window.location.reload();
@@ -129,7 +144,8 @@ for(let index in cart){
 					myDeleteItem.addEventListener('click', function(e) {
   
 					//Récupérer le panier existant depuis le localStorage
-					let cartLS = localStorage.getItem("cart");
+				let cartLS = localStorage.getItem("cart");
+				//loadCart;
 					  //Trouver le produit recherché
 				let index = cart.findIndex(item => (cartItemId === item.id && cartItem.color === item.color));
 					if(index !== -1) {
@@ -138,6 +154,7 @@ for(let index in cart){
   
 						//Sauvegarder le nouveau panier dans le localStorage
 						localStorage.setItem("cart", JSON.stringify(cart))
+						//saveCart;
   
 						//Supprimer le visuel de l'article
 						window.location.reload();
@@ -215,6 +232,7 @@ document.querySelector('#order').addEventListener("click", (e) => {
 	if(verificationBeforeSend() === true) {
 		//Préparation du tableau productsIds
 		let cartContent = JSON.parse(localStorage.getItem("cart")) || [];
+		//itemCart;
 		let productsIds = [];
 		for(let i = 0; i < cartContent.length; i++){
 			productsIds.push(cartContent[i].id);
@@ -241,6 +259,7 @@ document.querySelector('#order').addEventListener("click", (e) => {
 		.then((res) => {
 			console.log(res.orderId);
 			localStorage.setItem("cart", JSON.stringify([]));
+			//saveCart;
 			window.location.href = "confirmation.html?orderId=" + res.orderId;
 		})
 		.catch((error) => {
@@ -252,6 +271,7 @@ document.querySelector('#order').addEventListener("click", (e) => {
 // Function allowing to verify everything before to send the form
 function verificationBeforeSend() {
 	let cartContent = JSON.parse(localStorage.getItem("cart")) || [];
+	//itemCart;
 	if(cartContent.length == 0){
 		alert("Votre panier est vide !");
 		return false;
