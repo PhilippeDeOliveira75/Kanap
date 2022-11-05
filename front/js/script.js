@@ -11,8 +11,7 @@ fetch("http://localhost:3000/api/products")
 
 	.then(function(products){
 		console.log(products.length);
-
-		if(products.lenght ===0){
+		if(products.length ===0){
 			let myH1 = document.querySelector("h1");
 			myH1.textContent = "Aucun produit n'est disponible !"
 	
