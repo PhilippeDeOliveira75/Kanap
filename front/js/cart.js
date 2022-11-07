@@ -14,6 +14,7 @@ else {
 	for(let index in cart){
 		let cartItem = cart[index];
 		let cartItemId = cartItem.id;
+		let cartItemColor = cartItem.color;
 
 		fetch(`http://localhost:3000/api/products/${cartItemId}`)
 			.then(function(res){
@@ -83,8 +84,16 @@ else {
 					myContentSettingsQuantityDiv.appendChild(myInputQuantity);
 					// Changer la quantité et la sauvegarder dans le LS
 					myInputQuantity.addEventListener('change', function (e) {
-						deleteProductToCart(cartItemId, cartItem.color);
+						let cart = getCart();
+						//Trouver le produit recherché
+						let index = findProductFromCart(cartItemId, cartItemColor);
+						//Modifier l'article du tableau
+						cart[index].quantity = Number(myInputQuantity.value);
+						//Sauvegarder le nouveau panier dans le localStorage
+						saveCart(cart);
+						//deleteProductToCart(cartItemId, cartItemColor);
 						window.location.reload();
+						//updateProductQuantityFromCart();
 					});
 
 					let myContentSettingsDelete = document.createElement('div');

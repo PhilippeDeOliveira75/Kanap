@@ -39,36 +39,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 
 		let cartBtn = document.getElementById('addToCart');
 		cartBtn.addEventListener('click', function(e) {
-			let color = document.getElementById('colors').value	
-			let qty = document.getElementById('quantity').value		
-			if(color == '' || qty <= 0 || qty > 100){
-				alert("Vous n'avez pas indiquez de couleur ou de quanité");
-				return
-			}
-			let infoProduct = {
-				id : productId,
-				color : color,
-				quantity : Number(qty),
-				}
-			// Récupérer le panier existant depuis le localStorage
-			let cart = getCart();
-
-			// Ajouter le produit au panier
-			let index = findProductFromCart(productId, color);
-			console.log(index)
-			if(index === -1) {
-				// Cas ou le produit n'est pas dans le panier : Ajouter le produit au tableau
-				cart.push(infoProduct)
-			}
-			else {
-				// Cas ou le produit est déjà dans le panier : Modifier la quantité
-				cart[index].quantity = Number(cart[index].quantity) + Number(qty);
-			}
-			// Sauvegarder le panier dans le localStorage
-			saveCart(cart);
-			if(confirm("Souhaitez vous aller sur la page panier ?")) {
-				window.location.href = "./cart.html"
-			}
+			addProductToCart()
 		});
 	})
 	.catch(function(err){

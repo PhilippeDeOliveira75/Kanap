@@ -19,21 +19,60 @@ function findProductFromCart(productId = '', productColor = '') {
 	return index;
 }
 
-function deleteProductToCart(productId = '', productColor = '') {
+/*function deleteProductToCart(cartItemId = '', cartItemColor = '') {
 	//Récupérer le panier existant depuis le localStorage
 	let cart = getCart();
 	//Trouver le produit recherché
-	let index = findProductFromCart(productId, productColor);
+	let index = findProductFromCart(cartItemId, cartItemColor);
 	//Modifier l'article du tableau
+	let myInputQuantity 
 	cart[index].quantity = Number(myInputQuantity.value);
 	//Sauvegarder le nouveau panier dans le localStorage
 	saveCart(cart);
-}
+}*/
 
 function updateProductQuantityFromCart(productId = '', productColor = '', quantity = 0) {
-
+	let cart = getCart();
+	//Trouver le produit recherché
+	let index = findProductFromCart(productId = '', productColor = '');
+	//Modifier l'article du tableau
+	let myInputQuantity = document.querySelector('input');
+	cart[index].quantity = Number(myInputQuantity.value);
+	//Sauvegarder le nouveau panier dans le localStorage
+	saveCart(cart);
+	//deleteProductToCart(cartItemId, cartItemColor);
+	window.location.reload();
 }
 
 function addProductToCart(productId = '', productColor = '', quantity = 0) {
+	let color = document.getElementById('colors').value	
+			let qty = document.getElementById('quantity').value		
+			if(color == '' || qty <= 0 || qty > 100){
+				alert("Vous n'avez pas indiquez de couleur ou de quanité");
+				return
+			}
+			let infoProduct = {
+				id : productId,
+				color : productColor,
+				quantity : Number(quantity),
+				}
+			// Récupérer le panier existant depuis le localStorage
+			let cart = getCart();
 
+			// Ajouter le produit au panier
+			let index = findProductFromCart(productId, productColor);
+			console.log(index)
+			if(index === -1) {
+				// Cas ou le produit n'est pas dans le panier : Ajouter le produit au tableau
+				cart.push(infoProduct)
+			}
+			else {
+				// Cas ou le produit est déjà dans le panier : Modifier la quantité
+				cart[index].quantity = Number(cart[index].quantity) + Number(quantity);
+			}
+			// Sauvegarder le panier dans le localStorage
+			saveCart(cart);
+			if(confirm("Souhaitez vous aller sur la page panier ?")) {
+				window.location.href = "./cart.html"
+			}
 }
