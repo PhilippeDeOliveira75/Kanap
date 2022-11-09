@@ -84,7 +84,7 @@ else {
 					myContentSettingsQuantityDiv.appendChild(myInputQuantity);
 					// Changer la quantité et la sauvegarder dans le LS
 					myInputQuantity.addEventListener('change', function (e) {
-						let cart = getCart();
+						/*let cart = getCart();
 						//Trouver le produit recherché
 						let index = findProductFromCart(cartItemId, cartItemColor);
 						//Modifier l'article du tableau
@@ -92,8 +92,8 @@ else {
 						//Sauvegarder le nouveau panier dans le localStorage
 						saveCart(cart);
 						//deleteProductToCart(cartItemId, cartItemColor);
-						window.location.reload();
-						//updateProductQuantityFromCart();
+						window.location.reload();*/
+						updateProductQuantityFromCart();
 					});
 
 					let myContentSettingsDelete = document.createElement('div');

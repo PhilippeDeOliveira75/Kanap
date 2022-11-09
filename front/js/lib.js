@@ -31,30 +31,29 @@ function findProductFromCart(productId = '', productColor = '') {
 	saveCart(cart);
 }*/
 
-function updateProductQuantityFromCart(productId = '', productColor = '', quantity = 0) {
+/*function updateProductQuantityFromCart(productId, productColor, quantity) {
 	let cart = getCart();
 	//Trouver le produit recherché
-	let index = findProductFromCart(productId = '', productColor = '');
+	let index = findProductFromCart(productId, productColor);
 	//Modifier l'article du tableau
-	let myInputQuantity = document.querySelector('input');
-	cart[index].quantity = Number(myInputQuantity.value);
+	cart[index].quantity = Number(quantity);
 	//Sauvegarder le nouveau panier dans le localStorage
 	saveCart(cart);
 	//deleteProductToCart(cartItemId, cartItemColor);
 	window.location.reload();
-}
+}*/
 
 function addProductToCart(productId = '', productColor = '', quantity = 0) {
 	let color = document.getElementById('colors').value	
-			let qty = document.getElementById('quantity').value		
+			let qty = document.getElementById('quantity').value;	
 			if(color == '' || qty <= 0 || qty > 100){
 				alert("Vous n'avez pas indiquez de couleur ou de quanité");
 				return
 			}
 			let infoProduct = {
 				id : productId,
-				color : productColor,
-				quantity : Number(quantity),
+				color : color,
+				quantity : Number(qty),
 				}
 			// Récupérer le panier existant depuis le localStorage
 			let cart = getCart();
