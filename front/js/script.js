@@ -6,9 +6,6 @@ fetch("http://localhost:3000/api/products")
 			return res.json();
 		}
 	})
-
-	
-
 	.then(function(products){
 		console.log(products.length);
 		if(products.length ===0){

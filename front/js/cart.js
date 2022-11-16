@@ -83,55 +83,24 @@ else {
 					myInputQuantity.classList.add('itemQuantity');
 					myContentSettingsQuantityDiv.appendChild(myInputQuantity);
 					// Changer la quantité et la sauvegarder dans le LS
-					myInputQuantity.addEventListener('change', function (e) {
-						/*let cart = getCart();
-						//Trouver le produit recherché
-						let index = findProductFromCart(cartItemId, cartItemColor);
-						//Modifier l'article du tableau
-						cart[index].quantity = Number(myInputQuantity.value);
-						//Sauvegarder le nouveau panier dans le localStorage
-						saveCart(cart);
-						//deleteProductToCart(cartItemId, cartItemColor);
-						window.location.reload();*/
-						updateProductQuantityFromCart();
+					myInputQuantity.addEventListener('input', function (e) {
+						updateProductQuantityFromCart(cartItemId, cartItemColor, Number(myInputQuantity.value));
+						window.location.reload();
 					});
 
 					let myContentSettingsDelete = document.createElement('div');
-						myContentSettingsDelete.classList.add('cart__item__content__settings__delete');
-						myContentSettingsDiv.appendChild(myContentSettingsDelete);
+					myContentSettingsDelete.classList.add('cart__item__content__settings__delete');
+					myContentSettingsDiv.appendChild(myContentSettingsDelete);
 
 					let myDeleteItem = document.createElement('p');
-						myDeleteItem.classList.add('deleteItem');
-						myDeleteItem.textContent = "Supprimer";
-						myContentSettingsDelete.appendChild(myDeleteItem);
-						myDeleteItem.addEventListener('click', function(e) {
-
-					//Récupérer le panier existant depuis le localStorage
-					let cart = getCart();
-
-					//Trouver le produit recherché
-					let index = findProductFromCart(cartItemId, cartItem.color);
-						if(index !== -1) {
-							//Supprimer l'article du tableau
-							cart.splice(index, 1);
-
-							//Sauvegarder le nouveau panier dans le localStorage
-							saveCart(cart);
-
-							//Supprimer le visuel de l'article
-							window.location.reload();
-							myArticle.remove();
-							//let deleteItemFromPage = document.querySelector(`article[data-id="${cartItemId}"][data-color="${cartItem.color}"]`);
-							//deleteItemFromPage.remove()
-
-
-							document.getElementById('totalQuantity').textContent = 0;
-							document.getElementById('totalPrice').textContent = 0;
-							for(let indexTmp in cart){
-							 	let cartItemTmp = cart[indexTmp];
-								refreshTotals(cartItemTmp.quantity, product.price);
-							}
-						}
+					myDeleteItem.classList.add('deleteItem');
+					myDeleteItem.textContent = "Supprimer";
+					myContentSettingsDelete.appendChild(myDeleteItem);
+					myDeleteItem.addEventListener('click', function(e) {
+						//Supprimer le produit du panier
+						deleteProductToCart(cartItemId, cartItem.color);
+						//Supprimer le visuel de l'article
+						window.location.reload();
 					});
 
 					refreshTotals(cartItem.quantity, product.price);
@@ -160,41 +129,43 @@ else {
 				let totalAmountSpan = document.getElementById('totalPrice');
 				totalAmountSpan.textContent = Number(totalAmountSpan.textContent) + (quantity * Number(price));
 			}
+
+			verificationBeforeSend();
 	}
 
-	// Adding event listeners
+	// Ajouter un évènement
 	document.querySelector('#firstName').addEventListener("input", () => {
-		// Function allowing to verify firstname input
+		// Fonction de vérification de l'input firstName
 		verificationInput('#firstName', "^[-a-zA-ZÀ-ÿ' ]+$");
 	});
 
 	document.querySelector('#lastName').addEventListener("input", () => {
-		// Function allowing to verify lastname input
+		// Fonction de vérification de l'input lastname
 		verificationInput('#lastName', "^[-a-zA-ZÀ-ÿ' ]+$");
 	});
 
 	document.querySelector('#address').addEventListener("input", () => {
-		// Function allowing to verify address input
+		// Fonction de vérification de l'input address
 		verificationInput('#address', "^[-0-9a-zA-ZÀ-ÿ' ]+$");
 	});
 
 	document.querySelector('#city').addEventListener("input", () => {
-		// Function allowing to verify city input
+		// Fonction de vérification de l'input city
 		verificationInput('#city', "^[-a-zA-ZÀ-ÿ' ]+$");
 	});
 
 	document.querySelector('#email').addEventListener("input", () => {
-		// Function allowing to verify email input
+		// Fonction de vérification de l'input email
 		verificationInput('#email', "^[-A-Za-z0-9._]+@[A-Za-z0-9.]+\.[A-Za-z]+$");
 	});
 
-	// ajout du listener sur le bouton + envoi
+	// Ajout du listener sur le bouton + envoi
 	document.querySelector('#order').addEventListener("click", (e) => {
 		e.preventDefault();
 		if(verificationBeforeSend() === true) {
 			//Préparation du tableau productsIds
 			let cartContent = getCart();
-			//itemCart;
+			//itemCart
 			let productsIds = [];
 			for(let i = 0; i < cartContent.length; i++){
 				productsIds.push(cartContent[i].id);
@@ -209,6 +180,8 @@ else {
 				email: document.querySelector('#email').value,
 			};
 
+			verificationBeforeSend();
+
 			const data = {contact: contact, products: productsIds};
 			fetch("http://localhost:3000/api/products/order", {
 				method: "POST",
@@ -219,9 +192,7 @@ else {
 				return res.json()
 			})
 			.then((res) => {
-				console.log(res.orderId);
 				localStorage.setItem("cart", JSON.stringify([]));
-				//saveCart;
 				window.location.href = "confirmation.html?orderId=" + res.orderId;
 			})
 			.catch((error) => {
@@ -231,10 +202,10 @@ else {
 	});
 }
 
-// Function allowing to verify everything before to send the form
+// Vérification avant envoi du formulaire
 function verificationBeforeSend() {
 	let cartContent = JSON.parse(localStorage.getItem("cart")) || [];
-	//itemCart;
+	//itemCart
 	if(cartContent.length === 0){
 		alert("Votre panier est vide !");
 		return false;
@@ -247,7 +218,7 @@ function verificationBeforeSend() {
 	return true;
 }
 
-// Function allowing to verify input
+// Verification des champs
 function verificationInput(inputSelector = '', regexExpression = '') {
 	const input = document.querySelector(inputSelector);
 	let errorMsg = document.querySelector(inputSelector+'ErrorMsg');
